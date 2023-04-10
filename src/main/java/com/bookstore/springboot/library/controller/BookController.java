@@ -17,15 +17,15 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @GetMapping("/getAllBook")
-    public List<BookDTO> getAllBooks() {
-        return bookService.getAllBooks();
-    }
+//    @GetMapping("/getAllBook")
+//    public List<BookDTO> getAllBooks() {
+//        return bookService.getAllBooks();
+//    }
 
-    @GetMapping("/book/{id}")
-    public List<BookTitleAuthorDTO> getBook(@PathVariable String id) {
-        return bookService.getBook();
-    }
+//    @GetMapping("/book/{id}")
+//    public List<BookTitleAuthorDTO> getBook(@PathVariable String id) {
+//        return bookService.getBook();
+//    }
 
     @PostMapping("/save-Book")
     public void saveBook() {
