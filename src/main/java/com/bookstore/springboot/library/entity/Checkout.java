@@ -1,6 +1,7 @@
 package com.bookstore.springboot.library.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +16,7 @@ import javax.persistence.Column;
 @AllArgsConstructor
 public class Checkout {
 
-    public  Checkout(String userEmail, String checkoutDate, String returnDate, Long bookId) {
+    public Checkout(String userEmail, String checkoutDate, String returnDate, Long bookId) {
         this.userEmail = userEmail;
         this.checkoutDate = checkoutDate;
         this.returnDate = returnDate;
@@ -23,7 +24,7 @@ public class Checkout {
     }
 
     @jakarta.persistence.Id
-    @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.SEQUENCE)
+    @jakarta.persistence.GeneratedValue(strategy = GenerationType.IDENTITY)
     @jakarta.persistence.Column(name = "id", nullable = false)
     private Long id;
 
