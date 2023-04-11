@@ -20,7 +20,12 @@ public class BookController {
     @PutMapping("/source/checkout")
     public Book checkoutBook(@RequestParam Long bookId) throws Exception {
         String userEmail = "testuser@email.com";
-        Book result = bookService.checkoutBook(userEmail, bookId);
-        return result;
+        return bookService.checkoutBook(userEmail, bookId);
+    }
+
+    @GetMapping("/source/ischeckedout/byuser")
+    public Boolean checkoutBookByUser(@RequestParam Long bookId) {
+        String userEmail = "testuser@email.com";
+        return bookService.checkoutBookByUser(userEmail, bookId);
     }
 }
