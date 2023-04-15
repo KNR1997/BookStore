@@ -21,4 +21,10 @@ public class ReviewController {
         String userEmail = "testuser@email.com";
         reviewService.postReview(userEmail, reviewRequest);
     }
+
+    @GetMapping("/secure/user/book")
+    public Boolean reviewBookByUser(@RequestParam Long bookId) throws Exception{
+        String userEmail = "testuser@email.com";
+        return reviewService.userReviewListed(userEmail, bookId);
+    }
 }

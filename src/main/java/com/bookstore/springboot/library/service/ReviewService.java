@@ -4,9 +4,9 @@ import com.bookstore.springboot.library.dao.BookRepository;
 import com.bookstore.springboot.library.dao.ReviewRepository;
 import com.bookstore.springboot.library.entity.Review;
 import com.bookstore.springboot.library.requestmodels.ReviewRequest;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -40,5 +40,10 @@ public class ReviewService {
         }
         review.setDate(Date.valueOf(LocalDate.now()));
         reviewRepository.save(review);
+    }
+
+    public boolean userReviewListed(String userEmail, Long bookId) {
+        Review validateReview = reviewRepository.findByUserEmailAndBookId(userEmail, bookId);
+        return validateReview != null;
     }
 }
