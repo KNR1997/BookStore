@@ -1,28 +1,27 @@
 package com.bookstore.springboot.library.config;
 
 import com.okta.spring.boot.oauth.Okta;
-import org.springframework.http.HttpMethod;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.accept.ContentNegotiationStrategy;
 import org.springframework.web.accept.HeaderContentNegotiationStrategy;
 
+@Configuration
 public class SecurityConfiguration {
 
-    private static void customize(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry configurer) {
-        configurer
-                .dispatcherTypeMatchers(HttpMethod.valueOf("/api/books/secure/**"))
-                .authenticated();
-    }
-
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         // Disable Cross Site Request Forgery
         http.csrf().disable();
 
         // Protect endpoints at /api/<type>/secure
-        http.authorizeHttpRequests(SecurityConfiguration::customize)
+        http.authorizeHttpRequests()
+                .requestMatchers("/api/books/secure/**")
+                .authenticated()
+                .and()
                 .oauth2ResourceServer()
                 .jwt();
 

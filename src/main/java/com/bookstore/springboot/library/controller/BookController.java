@@ -17,13 +17,13 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @PutMapping("/source/checkout")
+    @PutMapping("/secure/checkout")
     public Book checkoutBook(@RequestParam Long bookId) throws Exception {
         String userEmail = "testuser@email.com";
         return bookService.checkoutBook(userEmail, bookId);
     }
 
-    @GetMapping("/source/ischeckedout/byuser")
+    @GetMapping("/secure/ischeckedout/byuser")
     public Boolean checkoutBookByUser(@RequestParam Long bookId) {
         String userEmail = "testuser@email.com";
         return bookService.checkoutBookByUser(userEmail, bookId);
