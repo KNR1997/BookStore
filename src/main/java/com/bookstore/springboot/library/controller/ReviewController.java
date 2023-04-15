@@ -1,9 +1,9 @@
 package com.bookstore.springboot.library.controller;
 
+import com.bookstore.springboot.library.requestmodels.ReviewRequest;
 import com.bookstore.springboot.library.service.ReviewService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.bookstore.springboot.library.utils.ExtractJWT;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("http://localhost:3000")
 @RequestMapping("api/reviews")
@@ -16,8 +16,9 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-//    public void postReview(@RequestHeader(value = "Authorization") String token,
-//                           @RequestBody ReviewRequest reviewRequest) throws Exception {
-////        String userEmail = ExtractJWT.
-//    }
+    @PostMapping("/secure")
+    public void postReview(@RequestBody ReviewRequest reviewRequest) throws Exception {
+        String userEmail = "testuser@email.com";
+        reviewService.postReview(userEmail, reviewRequest);
+    }
 }

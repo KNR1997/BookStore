@@ -1,6 +1,7 @@
 package com.bookstore.springboot.library.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +18,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class Review {
     @jakarta.persistence.Id
-    @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.SEQUENCE)
+    @jakarta.persistence.GeneratedValue(strategy = GenerationType.IDENTITY)
     @jakarta.persistence.Column(name = "id", nullable = false)
     private Long id;
 
