@@ -14,13 +14,10 @@ import java.time.LocalDate;
 @Transactional
 public class ReviewService {
 
-    private BookRepository bookRepository;
-
     private ReviewRepository reviewRepository;
 
-    public ReviewService(BookRepository bookRepository, ReviewRepository reviewRepository) {
+    public ReviewService(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
-        this.bookRepository = bookRepository;
     }
 
     public void postReview(String userEmail, ReviewRequest reviewRequest) throws Exception {
@@ -30,7 +27,7 @@ public class ReviewService {
         }
 
         Review review = new Review();
-        review.setBookId(review.getBookId());
+        review.setBookId(reviewRequest.getBookId());
         review.setRating(reviewRequest.getRating());
         review.setUserEmail(userEmail);
         if (reviewRequest.getReviewDescription().isPresent()) {

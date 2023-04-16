@@ -17,14 +17,16 @@ public class ReviewController {
     }
 
     @PostMapping("/secure")
-    public void postReview(@RequestBody ReviewRequest reviewRequest) throws Exception {
-        String userEmail = "testuser@email.com";
+    public void postReview(@RequestHeader(value = "Authorization") String token,
+                           @RequestBody ReviewRequest reviewRequest) throws Exception {
+        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         reviewService.postReview(userEmail, reviewRequest);
     }
 
     @GetMapping("/secure/user/book")
-    public Boolean reviewBookByUser(@RequestParam Long bookId) throws Exception{
-        String userEmail = "testuser@email.com";
+    public Boolean reviewBookByUser(@RequestHeader(value = "Authorization") String token,
+                                    @RequestParam Long bookId) throws Exception{
+        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         return reviewService.userReviewListed(userEmail, bookId);
     }
 }
