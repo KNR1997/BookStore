@@ -1,6 +1,7 @@
 package com.bookstore.springboot.library.requestmodels;
 
 import lombok.Data;
+import org.apache.catalina.util.Introspection;
 
 import java.util.Optional;
 
@@ -12,4 +13,6 @@ public class ReviewRequest {
     private Long bookId;
 
     private Optional<String> reviewDescription;
+
+    private Integer sentimentScore;
 }

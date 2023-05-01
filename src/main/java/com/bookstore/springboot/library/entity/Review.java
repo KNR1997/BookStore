@@ -23,7 +23,6 @@ public class Review {
 
     @Column(name = "rating")
     private double rating;
-    ;
 
     @Column(name = "book_id")
     private Long bookId;
@@ -31,5 +30,6 @@ public class Review {
     @Column(name = "review_description")
     private String reviewDescription;
 
-
+    @Column(name = "review_score")
+    private Integer reviewScore;
 }

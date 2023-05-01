@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Transactional
 public class ReviewService {
 
-    private ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository;
 
     public ReviewService(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
@@ -34,6 +34,9 @@ public class ReviewService {
             review.setReviewDescription(reviewRequest.getReviewDescription().map(
                     Object::toString
             ).orElse(null));
+        }
+        if (reviewRequest.getSentimentScore() != null) {
+            review.setReviewScore(reviewRequest.getSentimentScore());
         }
         review.setDate(Date.valueOf(LocalDate.now()));
         reviewRepository.save(review);
