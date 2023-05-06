@@ -1,7 +1,9 @@
 package com.bookstore.springboot.library.responsemodels;
 
 import com.bookstore.springboot.library.entity.Book;
+import lombok.Data;
 
+@Data
 public class ShelfCurrentLoansResponse {
 
     public ShelfCurrentLoansResponse(Book book, int daysLeft) {
