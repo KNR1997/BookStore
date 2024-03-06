@@ -35,6 +35,10 @@ public class BookService {
         this.historyRepository = historyRepository;
     }
 
+    public void testService(){
+
+    }
+
     public Book checkoutBook(String userEmail, Long bookId) throws Exception {
 
         Optional<Book> book = bookRepository.findById(bookId);
