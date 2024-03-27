@@ -1,9 +1,9 @@
 package com.luv2code.springbootlibrary.service;
 
-import com.luv2code.springbootlibrary.dao.BookRepository;
 import com.luv2code.springbootlibrary.dao.ReviewRepository;
 import com.luv2code.springbootlibrary.entity.Review;
 import com.luv2code.springbootlibrary.requestmodels.ReviewRequest;
+import com.luv2code.springbootlibrary.utils.MyLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +15,8 @@ import java.time.LocalDate;
 @Transactional
 public class ReviewService {
 
+    private static final MyLogger logger = MyLogger.getInstance();
+
     private ReviewRepository reviewRepository;
 
     @Autowired
@@ -23,29 +25,31 @@ public class ReviewService {
     }
 
     public void postReview(String userEmail, ReviewRequest reviewRequest) throws Exception {
-        Review validateReview = reviewRepository.findByUserEmailAndBookId(userEmail, reviewRequest.getBookId());
-        if (validateReview != null) {
-            throw new Exception("Review already created");
-        }
+        try {
+            Review validateReview = reviewRepository.findByUserEmailAndBookId(userEmail, reviewRequest.getBookId());
+            if (validateReview != null) {
+                throw new Exception("Review already created");
+            }
 
-        Review review = new Review();
-        review.setBookId(reviewRequest.getBookId());
-        review.setRating(reviewRequest.getRating());
-        review.setUserEmail(userEmail);
-        if (reviewRequest.getReviewDescription().isPresent()) {
-            review.setReviewDescription(reviewRequest.getReviewDescription().map(
-                    Object::toString
-            ).orElse(null));
+            Review review = new Review();
+            review.setBookId(reviewRequest.getBookId());
+            review.setRating(reviewRequest.getRating());
+            review.setUserEmail(userEmail);
+            review.setReviewDescription(reviewRequest.getReviewDescription().orElse(null));
+            review.setDate(Date.valueOf(LocalDate.now()));
+            reviewRepository.save(review);
+            logger.log("Review posted by user: " + userEmail);
+        } catch (Exception e) {
+            logger.log("Error occurred while posting review", e);
         }
-        review.setDate(Date.valueOf(LocalDate.now()));
-        reviewRepository.save(review);
     }
 
     public Boolean userReviewListed(String userEmail, Long bookId) {
-        Review validateReview = reviewRepository.findByUserEmailAndBookId(userEmail, bookId);
-        if (validateReview != null) {
-            return true;
-        } else {
+        try {
+            Review validateReview = reviewRepository.findByUserEmailAndBookId(userEmail, bookId);
+            return validateReview != null;
+        } catch (Exception e) {
+            logger.log("Error occurred while checking if user review exists", e);
             return false;
         }
     }
